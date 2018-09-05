@@ -1,4 +1,5 @@
 # EPIC-Kitchens Action recognition starter kit
+[![CircleCI status badge](https://img.shields.io/circleci/project/github/epic-kitchens/starter-kit-action-recognition/master.svg)](https://circleci.com/gh/epic-kitchens/starter-kit-action-recognition)
 
 This is a tutorial introduction to the EPIC-kitchens egocentric action dataset.  
 We'll introduce you to EPIC and some tools like Snakemake, a python build tool, for managing the process
