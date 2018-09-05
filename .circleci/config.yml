@@ -40,6 +40,7 @@ jobs:
               curl "https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh" -o miniconda.sh
               bash miniconda.sh -b -p $MINICONDA_ROOT
               hash -r
+              source $BASH_ENV # Re source now that conda is installed
             fi
             conda config --set always_yes yes
             conda info -a
