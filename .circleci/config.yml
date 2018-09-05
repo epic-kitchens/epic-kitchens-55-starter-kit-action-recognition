@@ -1,0 +1,94 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/buildpack-deps:18.04-curl-browsers
+    environment:
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Setup environment variables
+          command: |
+            cat <<'EOF' > $BASH_ENV
+            export MINICONDA_ROOT="$HOME/.miniconda"
+            # Do a find an replace when changing this version number, circle
+            # has dropped env interpolation in yaml strings so we can't use
+            # this -_- when we cache the conda install.
+            export MINICONDA_VERSION='4.5.11'
+
+            if [ -f "$MINICONDA_ROOT/etc/profile.d/conda.sh" ]; then
+              source  "$MINICONDA_ROOT/etc/profile.d/conda.sh"
+            fi
+            EOF
+
+      - run:
+          # Necessary dependencies for building Pillow-SIMD
+          name: Install GCC
+          command: sudo apt-get install -y gcc
+
+
+      - restore_cache:
+          keys:
+            - miniconda-4.5.11
+
+      - run:
+          name: Set up conda
+          command: |
+            cd /tmp
+            if [[ ! -d $MINICONDA_ROOT ]]; then
+              curl "https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh" -o miniconda.sh
+              bash miniconda.sh -b -p $MINICONDA_ROOT
+              hash -r
+            fi
+            conda config --set always_yes yes
+            conda info -a
+
+      - save_cache:
+          key: miniconda-4.5.11
+          paths:
+            - ~/.miniconda
+
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "environment.yaml" }}
+
+      - run:
+          name: Set up conda env
+          command: conda env update --name ar-starter-pack --file environment.yaml --quiet
+
+      - save_cache:
+          key: dependencies-{{ checksum "environment.yaml" }}
+          paths:
+            - ~/.miniconda/envs/ar-starter-pack
+
+      - run:
+          name: Smoke test downloads
+          command: |
+            conda activate ar-starter-pack
+
+            echo "Test downloading metadata"
+            snakemake download_metadata
+
+            echo "Test downloading train rgb images"
+            snakemake data/raw/rgb/P03/P03_15.tar
+            echo "Test downloading train flow images"
+            snakemake data/raw/flow/P03/P03_15.tar
+
+            echo "Test downloading test rgb images"
+            snakemake data/raw/rgb/P26/P26_30.tar
+            echo "Test downloading test flow images"
+            snakemake data/raw/flow/P26/P26_30.tar
+
+      - run:
+          name: Test intro notebook runs
+          command: |
+            conda activate ar-starter-pack
+            cd notebooks
+            jupyter nbconvert --to notebook --execute  1.0-intro.ipynb
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build

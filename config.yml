@@ -1,0 +1,5 @@
+# This should be set to some directory backed by fast storage
+# with at least 500GB of available space, might even need 1TB.
+# If you don't have fast storage available then just set this
+# to `data`.
+tmp_dir: data

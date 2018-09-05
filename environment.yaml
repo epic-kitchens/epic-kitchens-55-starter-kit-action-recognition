@@ -1,0 +1,22 @@
+name: epic-ar-starter
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - pip=10.0.1
+  - python=3.6.5
+  - libjpeg-turbo=2.0.0
+  - pip:
+    - datrie==0.7.1
+    - epic-kitchens==1.5.0
+    - gulpio==531.53
+    - numpy==1.13.3
+    - opencv-python==3.4.2.17
+    - pandas==0.23.4
+    - pillow-simd==5.1.1.post0
+    - pyyaml==3.13
+    - seaborn==0.9.0
+    - snakemake==5.2.2
+    - matplotlib==2.2.2
+    - notebook==5.5.0
+    - jupyter==1.0.0
