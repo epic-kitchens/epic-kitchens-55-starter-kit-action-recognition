@@ -31,7 +31,7 @@ either miniconda or anaconda will be fine.
 Download the repository, and create the conda virtual environment:
 
 ```console
-$ git clone https://github.com/epic-kitchens/epic-ar-starter-kit.git epic
+$ https://github.com/epic-kitchens/starter-kit-action-recognition.git epic
 $ cd epic
 $ conda env create -n epic -f environment.yaml
 $ conda activate epic
