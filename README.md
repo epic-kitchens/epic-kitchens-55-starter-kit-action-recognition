@@ -1,7 +1,7 @@
-# EPIC-Kitchens Action recognition starter kit
+# EPIC-Kitchens-55 Action recognition starter kit
 [![CircleCI status badge](https://img.shields.io/circleci/project/github/epic-kitchens/starter-kit-action-recognition/master.svg)](https://circleci.com/gh/epic-kitchens/starter-kit-action-recognition)
 
-This is a tutorial introduction to the EPIC-kitchens egocentric action dataset.  
+This is a tutorial introduction to the EPIC-kitchens-55 egocentric action dataset.  
 We'll introduce you to EPIC and some tools like Snakemake, a python build tool, for managing the process
 of
 
@@ -89,7 +89,7 @@ $ snakemake -p download_metadata
 ## Notebooks
 
 In this section we'll investigate the actions within EPIC and learn how to
-use the [`epic-kitchens`](https://github.com/epic-kitchens/epic-lib) library
+use the [`epic-kitchens-55`](https://github.com/epic-kitchens/epic-lib) library
 that provides software for common use cases. Ensure you have run `snakemake -j
 $(nproc) all` before using these notebooks as they use files created from the
 pipeline.
